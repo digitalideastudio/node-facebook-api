@@ -14,7 +14,7 @@ export interface NodeFacebookConfig {
 
 // const fb = new NodeFacebook({ ... });
 // const url = fb.getGraphUrl(); // auth & code & send to the frontend so user can see FB OAuth2 Consent window
-// fb.authenticate('123456789'); // specify the code sent by frontend once user authenticated in FB OAuth2 Consent window
+// fb.authorize('123456789'); // specify the code sent by frontend once user authenticated in FB OAuth2 Consent window
 // const profile = await fb.get('/me');
 
 export default class NodeFacebook {
@@ -261,32 +261,30 @@ export default class NodeFacebook {
   }
 
   private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {
+    const query = {
+      access_token: this.accessToken,
+      ...params,
+    } as {
+      access_token: string;
+      appsecret_proof: string;
+      [index: string]: any;
+    };
+
     let url = rawUrl.trim();
 
-    url += ~url.indexOf('?') ? '&' : '?';
-
-    // add leading slash
-    if (url.charAt(0) !== '/' && url.substr(0, 4) !== 'http') url = '/' + url;
-
-    // add access token to url
-    if (this.accessToken && url.indexOf('access_token=') === -1) {
-      url += "access_token=" + this.accessToken;
+    // remove leading slash
+    if (url.charAt(0) === '/') {
+      url = url.substring(1);
     }
 
     // add appSecret_proof to the url
     if (this.accessToken && this.config.client_secret && url.indexOf('appsecret_proof') === -1) {
       const hmac = crypto.createHmac('sha256', this.config.client_secret);
       hmac.update(this.accessToken);
-      url += ~url.indexOf('?') ? '&' : '?';
-      url += "appsecret_proof=" + hmac.digest('hex');
+      query.appsecret_proof = hmac.digest('hex');
     }
 
-    if (params)  {
-      url += ~url.indexOf('?') ? '&' : '?';
-      url += querystring.stringify(params);
-    }
-
-    url = `${this.graphUrl}${url}`
+    url = `${this.graphUrl}/${url}?${querystring.stringify(query)}`
 
     if (this.config.debug) {
       console.log(`Performing a call to URL: ${url}`);

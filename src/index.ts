@@ -11,9 +11,10 @@ export interface NodeFacebookConfig {
   version?: string;
 }
 
-// const api = new NodeFacebookApi({client_id: 123123, client_secret: 'asdasdasd'});
-// const url = api.getGraphUrl(); // auth & code
-// const access_token = api.exchangeToToken('123123');
+// const fb = new NodeFacebook({ ... });
+// const url = fb.getGraphUrl(); // auth & code & send to the frontend so user can see FB OAuth2 Consent window
+// fb.authenticate('123456789'); // specify the code sent by frontend once user authenticated in FB OAuth2 Consent window
+// const profile = await fb.get('/me');
 
 export default class NodeFacebook {
   protected oAuthDialogUrl: string;
@@ -34,8 +35,7 @@ export default class NodeFacebook {
   }
 
   /**
-   * Accepts an url an returns facebook
-   * json data to the callback provided
+   * Accepts an url an returns facebook json data
    *
    * if the response is an image
    * ( FB redirects profile image requests directly to the image )
@@ -45,17 +45,17 @@ export default class NodeFacebook {
    *
    *    Passing params directly in the url
    *
-   *      graph.get("zuck?fields=picture", callback)
+   *      fb.get("zuck?fields=picture")
    *
    *    OR
    *
    *      const params = { fields: picture };
-   *      graph.get("zuck", params, callback);
+   *      fb.get("zuck", params);
    *
    *    GraphApi calls that redirect directly to an image
    *    will return a json response with relavant fields
    *
-   *      graph.get("/zuck/picture", callback);
+   *      fb.get("/zuck/picture");
    *
    *      {
    *        image: true,
@@ -82,7 +82,7 @@ export default class NodeFacebook {
    * Ex:
    *
    *    const wallPost = { message: "heyooo budday" };
-   *    graph.post(friendID + "/feed", wallPost, callback);
+   *    fb.post(friendID + "/feed", wallPost);
    *
    * @param {string} url
    * @param {object} postData

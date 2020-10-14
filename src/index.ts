@@ -41,6 +41,10 @@ export default class NodeFacebook {
       debug: config?.debug || (process.env.FACEBOOK_DEBUG?.toLowerCase() === 'true') || false,
     }
 
+    if (new URL(normalizedConfig.redirect_uri).pathname === '/' && normalizedConfig.redirect_uri.substr(-1) !== '/') {
+      normalizedConfig.redirect_uri = `${normalizedConfig.redirect_uri}/`;
+    }
+
     this.config = normalizedConfig;
 
     this.setVersion(normalizedConfig.version);
@@ -259,6 +263,16 @@ export default class NodeFacebook {
    */
   public getAccessToken(): string {
     return this.accessToken;
+  }
+
+  public setScope(scope: string) {
+    this.config.scope = scope;
+
+    return this;
+  }
+
+  public getScope() {
+    return this.config.scope;
   }
 
   private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {

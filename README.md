@@ -25,7 +25,7 @@ const url = await fb.getOAuthUrl();
 console.log(url); // Send to the frontend so user can see FB OAuth2 Consent window and retrieve a code
 ```
 
-![OAuth Consent Window](https://github.com/digitalideastudio/node-facebook-api/blob/main/.github/oauth_sample.png)
+![OAuth Consent Window](https://github.com/digitalideastudio/node-facebook-api/blob/main/.github/oauth_window.png){:height="400px" width="200px"}
 
 #### Step 3. Exchange the code to Access Token
 

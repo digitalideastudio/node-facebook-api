@@ -1,6 +1,6 @@
 {
   "name": "@digitalideastudio/node-facebook-api",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Nodejs module for performing facebook graph api calls",
   "main": "lib/index.js",
   "private": false,

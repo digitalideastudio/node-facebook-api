@@ -207,6 +207,7 @@ export default class NodeFacebook {
       client_secret: this.config.client_secret,
       redirect_uri: this.config.redirect_uri,
       code: code,
+      guest: true,
     }
 
     this.accessToken = await this.get("/oauth/access_token", params).then(response => response.access_token);
@@ -261,14 +262,17 @@ export default class NodeFacebook {
   }
 
   private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {
-    const query = {
-      access_token: this.accessToken,
-      ...params,
-    } as {
+    const query = params as {
       access_token: string;
       appsecret_proof: string;
       [index: string]: any;
     };
+
+    if (!params?.guest) {
+      query.access_token = this.accessToken;
+    }
+
+    delete query.guest;
 
     let url = rawUrl.trim();
 

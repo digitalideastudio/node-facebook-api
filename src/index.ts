@@ -2,7 +2,7 @@ import fetch, { Response } from 'node-fetch';
 import querystring, { ParsedUrlQueryInput } from 'querystring';
 import crypto from 'crypto';
 
-export interface NodeFacebookApiConfig {
+export interface NodeFacebookConfig {
   client_id: string;
   client_secret: string;
   redirect_uri: string;
@@ -15,7 +15,7 @@ export interface NodeFacebookApiConfig {
 // const url = api.getGraphUrl(); // auth & code
 // const access_token = api.exchangeToToken('123123');
 
-export default class NodeFacebookApi {
+export default class NodeFacebook {
   protected oAuthDialogUrl: string;
 
   protected oAuthDialogUrlMobile: string;
@@ -26,7 +26,7 @@ export default class NodeFacebookApi {
 
   public accessToken: string = '';
 
-  constructor(protected config: NodeFacebookApiConfig) {
+  constructor(protected config: NodeFacebookConfig) {
     const version = config.version || this.defaultVersion;
 
     this.oAuthDialogUrl = `https://www.facebook.com/v${version}/dialog/oauth?`;

@@ -1,6 +1,6 @@
 {
-  "name": "@matrunchyk/node-facebook-api",
-  "version": "1.0.1",
+  "name": "@digitalideastudio/node-facebook",
+  "version": "1.0.2",
   "description": "Nodejs module for performing facebook graph api calls",
   "main": "lib/index.js",
   "dependencies": {
@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matrunchyk/node-facebook-api.git"
+    "url": "git+https://github.com/matrunchyk/node-facebook.git"
   },
   "keywords": [],
   "author": "Serhii Matrunchyk",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/matrunchyk/node-facebook-api/issues"
+    "url": "https://github.com/matrunchyk/node-facebook/issues"
   },
-  "homepage": "https://github.com/matrunchyk/node-facebook-api#readme",
+  "homepage": "https://github.com/matrunchyk/node-facebook#readme",
   "publishConfig": {
     "registry":"https://npm.pkg.github.com"
   },

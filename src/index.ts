@@ -18,8 +18,6 @@ export interface NodeFacebookConfig {
 // const profile = await fb.get('/me');
 
 export default class NodeFacebook {
-  public accessToken: string = '';
-
   protected oAuthDialogUrl!: string;
 
   protected oAuthDialogUrlMobile!: string;
@@ -29,6 +27,8 @@ export default class NodeFacebook {
   protected graphUrl!: string;
 
   private config: NodeFacebookConfig;
+
+  private accessToken: string = '';
 
   constructor(config?: NodeFacebookConfig) {
     const normalizedConfig = {
@@ -242,6 +242,22 @@ export default class NodeFacebook {
     this.graphUrl = `https://graph.facebook.com/v${version}`;
 
     return this;
+  }
+
+  /**
+   * @param accessToken
+   */
+  public setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+
+    return this;
+  }
+
+  /**
+   * @return string
+   */
+  public getAccessToken(): string {
+    return this.accessToken;
   }
 
   private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {

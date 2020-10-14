@@ -249,11 +249,12 @@ export default class NodeFacebook {
     if (this.accessToken && this.config.client_secret && url.indexOf('appsecret_proof') === -1) {
       const hmac = crypto.createHmac('sha256', this.config.client_secret);
       hmac.update(this.accessToken);
-
+      url += ~url.indexOf('?') ? '&' : '?';
       url += "appsecret_proof=" + hmac.digest('hex');
     }
 
     if (params)  {
+      url += ~url.indexOf('?') ? '&' : '?';
       url += querystring.stringify(params);
     }
 

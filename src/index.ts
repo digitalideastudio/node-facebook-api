@@ -8,7 +8,7 @@ export interface NodeFacebookConfig {
   redirect_uri: string;
   scope: string;
   mobile?: boolean;
-  version?: string;
+  version: string;
   debug?: boolean;
 }
 
@@ -18,6 +18,8 @@ export interface NodeFacebookConfig {
 // const profile = await fb.get('/me');
 
 export default class NodeFacebook {
+  public accessToken: string = '';
+
   protected oAuthDialogUrl!: string;
 
   protected oAuthDialogUrlMobile!: string;
@@ -26,12 +28,22 @@ export default class NodeFacebook {
 
   protected graphUrl!: string;
 
-  public accessToken: string = '';
+  private config: NodeFacebookConfig;
 
-  constructor(protected config: NodeFacebookConfig) {
-    const version = config.version || this.defaultVersion;
+  constructor(config?: NodeFacebookConfig) {
+    const normalizedConfig = {
+      client_id: config?.client_id || process.env.FACEBOOK_CLIENT_ID || '',
+      client_secret: config?.client_secret || process.env.FACEBOOK_CLIENT_SECRET || '',
+      redirect_uri: config?.redirect_uri || process.env.FACEBOOK_REDIRECT_URI || '',
+      scope: config?.scope || process.env.FACEBOOK_SCOPE || '',
+      mobile: config?.mobile || (process.env.FACEBOOK_MOBILE?.toLowerCase() === 'true') || false,
+      version: config?.version || process.env.FACEBOOK_VERSION || this.defaultVersion,
+      debug: config?.debug || (process.env.FACEBOOK_DEBUG?.toLowerCase() === 'true') || false,
+    }
 
-    this.setVersion(version);
+    this.config = normalizedConfig;
+
+    this.setVersion(normalizedConfig.version);
   }
 
   /**

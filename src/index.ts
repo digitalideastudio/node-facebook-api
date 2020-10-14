@@ -8,7 +8,7 @@ export interface NodeFacebookConfig {
   redirect_uri: string;
   scope: string;
   mobile?: boolean;
-  version: string;
+  version?: string;
   debug?: boolean;
 }
 
@@ -206,7 +206,6 @@ export default class NodeFacebook {
       client_id: this.config.client_id,
       client_secret: this.config.client_secret,
       redirect_uri: this.config.redirect_uri,
-      scope: this.config.scope,
       code: code,
     }
 

@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/matrunchyk/node-facebook-api/issues"
   },
-  "homepage": "https://github.com/matrunchyk/node-facebook-api#readme"
+  "homepage": "https://github.com/matrunchyk/node-facebook-api#readme",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  }
 }

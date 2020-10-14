@@ -275,6 +275,16 @@ export default class NodeFacebook {
     return this.config.scope;
   }
 
+  public setRedirectUri(redirectUri: string) {
+    this.config.redirect_uri = redirectUri;
+
+    return this;
+  }
+
+  public getRedirectUri() {
+    return this.config.redirect_uri;
+  }
+
   private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {
     const query = params as {
       access_token: string;

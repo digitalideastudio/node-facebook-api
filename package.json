@@ -1,6 +1,6 @@
 {
-  "name": "node-facebook-api",
-  "version": "1.0.0",
+  "name": "@matrunchyk/node-facebook-api",
+  "version": "1.0.1",
   "description": "Nodejs module for performing facebook graph api calls",
   "main": "lib/index.js",
   "dependencies": {
@@ -28,5 +28,8 @@
   "homepage": "https://github.com/matrunchyk/node-facebook-api#readme",
   "publishConfig": {
     "registry":"https://npm.pkg.github.com"
-  }
+  },
+  "files": [
+    "./lib"
+  ]
 }

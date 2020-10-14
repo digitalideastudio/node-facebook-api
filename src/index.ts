@@ -192,6 +192,7 @@ export default class NodeFacebook {
   public async authorize(code: string) {
     const params = {
       client_id: this.config.client_id,
+      client_secret: this.config.client_secret,
       redirect_uri: this.config.redirect_uri,
       scope: this.config.scope,
       code: code,

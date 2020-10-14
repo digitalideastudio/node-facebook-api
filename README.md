@@ -34,7 +34,7 @@ fb.authenticate(code); // specify the code sent by frontend once user authentica
 #### Ready to use Facebook API
 
 ```
-fb.get('me'); // Exactly the same you can use on API Explorer: https://developers.facebook.com/tools/explorer/
+fb.get('me'); // Exactly the same you can use on [API Explorer](https://developers.facebook.com/tools/explorer/)
 ```
 
 #### Support of env vars

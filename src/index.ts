@@ -1,4 +1,4 @@
-import fetch, { Response } from 'node-fetch';
+import fetch, { Response as NodeResponse } from 'node-fetch';
 import querystring, { ParsedUrlQueryInput } from 'querystring';
 import crypto from 'crypto';
 
@@ -9,6 +9,7 @@ export interface NodeFacebookConfig {
   scope: string;
   mobile?: boolean;
   version?: string;
+  debug?: boolean;
 }
 
 // const fb = new NodeFacebook({ ... });
@@ -17,21 +18,20 @@ export interface NodeFacebookConfig {
 // const profile = await fb.get('/me');
 
 export default class NodeFacebook {
-  protected oAuthDialogUrl: string;
+  protected oAuthDialogUrl!: string;
 
-  protected oAuthDialogUrlMobile: string;
+  protected oAuthDialogUrlMobile!: string;
 
   protected defaultVersion = '8.0';
 
-  protected graphUrl = 'https://graph.facebook.com';
+  protected graphUrl!: string;
 
   public accessToken: string = '';
 
   constructor(protected config: NodeFacebookConfig) {
     const version = config.version || this.defaultVersion;
 
-    this.oAuthDialogUrl = `https://www.facebook.com/v${version}/dialog/oauth?`;
-    this.oAuthDialogUrlMobile = `https://m.facebook.com/v${version}/dialog/oauth?`;
+    this.setVersion(version);
   }
 
   /**
@@ -96,7 +96,7 @@ export default class NodeFacebook {
       method: 'post',
       follow: 0,
       body: JSON.stringify(postData)
-    }).then(response => this.processResponse(response));
+    }).then(this.processResponse);
   }
 
   /**
@@ -227,6 +227,7 @@ export default class NodeFacebook {
     this.config.version = version;
     this.oAuthDialogUrl = `https://www.facebook.com/v${version}/dialog/oauth?`;
     this.oAuthDialogUrlMobile = `https://m.www.facebook.com/v${version}/dialog/oauth?`;
+    this.graphUrl = `https://graph.facebook.com/v${version}`;
 
     return this;
   }
@@ -256,10 +257,16 @@ export default class NodeFacebook {
       url += querystring.stringify(params);
     }
 
+    url = `${this.graphUrl}${url}`
+
+    if (this.config.debug) {
+      console.log(`Performing a call to URL: ${url}`);
+    }
+
     return url;
   }
 
-  protected processResponse(response: Response): Promise<any> {
-    return response.headers.get('Content-Type') === 'application/json' ? response.json() : response.blob();
+  protected processResponse(response: NodeResponse): Promise<any> {
+    return response.json();
   }
 }

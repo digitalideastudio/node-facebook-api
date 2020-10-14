@@ -296,6 +296,18 @@ export default class NodeFacebook {
   }
 
   protected processResponse(response: NodeResponse): Promise<any> {
-    return response.json();
+    return response.json()
+      .then(data => {
+        if (data.error) {
+          throw new Error(`
+          type: ${data.error.type}
+          message: ${data.error.message}
+          code: ${data.error.code}
+          error_subcode : ${data.error.error_subcode}
+          fbtrace_id : ${data.error.fbtrace_id}
+          `);
+        }
+        return data;
+      });
   }
 }

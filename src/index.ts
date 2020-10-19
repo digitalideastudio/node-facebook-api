@@ -41,7 +41,7 @@ export default class NodeFacebook {
       debug: config?.debug || (process.env.FACEBOOK_DEBUG?.toLowerCase() === 'true') || false,
     }
 
-    if (new URL(normalizedConfig.redirect_uri).pathname === '/' && normalizedConfig.redirect_uri.substr(-1) !== '/') {
+    if (normalizedConfig.redirect_uri && new URL(normalizedConfig.redirect_uri).pathname === '/' && normalizedConfig.redirect_uri.substr(-1) !== '/') {
       normalizedConfig.redirect_uri = `${normalizedConfig.redirect_uri}/`;
     }
 

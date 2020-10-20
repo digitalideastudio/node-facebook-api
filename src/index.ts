@@ -285,7 +285,7 @@ export default class NodeFacebook {
     return this.config.redirect_uri;
   }
 
-  private normalizeUrl(rawUrl: string, params?: ParsedUrlQueryInput) {
+  private normalizeUrl(rawUrl: string, params: ParsedUrlQueryInput = {}) {
     const query = params as {
       access_token: string;
       appsecret_proof: string;
